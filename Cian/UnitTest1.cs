@@ -15,7 +15,7 @@ namespace Cian
         private string pass = "123QWEasd";
 
         private readonly By _signInButton = By.XPath("//span[text()='Войти']");
-        private readonly By _chooseMethod = By.XPath("//span[text()='Войти по email или id']");
+        private readonly By _chooseMethodButton = By.XPath("//span[text()='Войти по email или id']");
         private readonly By _emailOrId = By.XPath("//input[@name='username']");
         private readonly By _continueButton = By.XPath("//button[@data-mark='ContinueAuthBtn']");
         private readonly By _password = By.XPath("//input[@name='password']");
@@ -28,7 +28,9 @@ namespace Cian
         [SetUp]
         public void Setup()
         {
-            driver = new ChromeDriver(chromePath);
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.AddArguments("incognito");
+            driver = new ChromeDriver(chromePath, chromeOptions);
             driver.Navigate().GoToUrl(baseUrl);
             driver.Manage().Window.Maximize();
         }
@@ -43,7 +45,7 @@ namespace Cian
 
             try
             {
-                var chooseMethoButton = driver.FindElement(_chooseMethod);
+                var chooseMethoButton = driver.FindElement(_chooseMethodButton);
                 chooseMethoButton.Click();
             }
             catch (System.Exception)
